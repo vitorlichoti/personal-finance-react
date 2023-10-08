@@ -1,10 +1,11 @@
 import {Button, Flex, Text} from "@chakra-ui/react";
 import {useState} from "react";
 import {ChevronLeftIcon, ChevronRightIcon, Icon} from "@chakra-ui/icons";
-import {handleMonths, monthList} from "../service/CalendarService.ts";
+
+import {handlePrevNextMonth, handleMonths} from "../service/CalendarService.ts";
 
 function Calendar() {
-    const date = new Date()
+    const date: Date = new Date()
     const [position, setPosition] = useState(date.getMonth())
 
     return (
@@ -15,15 +16,15 @@ function Calendar() {
             </Button>
 
             <Text color="whiteAlpha.600" fontWeight="bold" fontSize={14} minWidth={95} textAlign="center">
-                {position === 0 ? monthList[11] : monthList[position - 1]}
+                {handlePrevNextMonth('prev', position)}
             </Text>
 
             <Text color="white" minWidth={95} fontWeight="extrabold" fontSize={20} textAlign="center">
-                {monthList[position]}
+                {handlePrevNextMonth('curr', position)}
             </Text>
 
             <Text color="whiteAlpha.600" minWidth={95} fontWeight="bold" fontSize={14} textAlign="center">
-                {position === 11 ? monthList[0] : monthList[position + 1]}
+                {handlePrevNextMonth('next', position)}
             </Text>
 
             <Button _hover={{ bg: '#161616' }} _active={{ bg: '#363636'}} width='12px' variant="ghost" onClick={() => handleMonths('increment', setPosition, position)}>
