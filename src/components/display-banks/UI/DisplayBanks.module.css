@@ -1,0 +1,17 @@
+.container {
+    background-color: #1E1E1E;
+    width: 34%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: inherit;
+    color: #9F9F9F;
+    border-radius: 8px;
+}
+
+.saldosContainer {
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+}
