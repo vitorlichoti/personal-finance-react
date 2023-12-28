@@ -1,6 +1,11 @@
 import styles from './DisplayBanks.module.css'
 
-function DisplayBanks() {
+interface DisplayBanksProps {
+  banks: never[]
+}
+
+function DisplayBanks({ banks }: DisplayBanksProps) {
+  
   return (
     <div className={styles.container}>
       <div className={styles.saldosContainer}>

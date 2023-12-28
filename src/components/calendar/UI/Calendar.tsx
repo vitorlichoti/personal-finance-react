@@ -1,12 +1,32 @@
 import {Button, Flex, Text} from "@chakra-ui/react";
-import {useState} from "react";
+import {Dispatch, SetStateAction, useEffect, useState} from "react";
 import {ChevronLeftIcon, ChevronRightIcon, Icon} from "@chakra-ui/icons";
 
 import {handlePrevNextMonth, handleMonths} from "../service/CalendarService.ts";
 
-function Calendar() {
+import { obterPrimeiroUltimoDiaDoMes } from "../service/CalendarDaysHandler.ts";
+import { getBanksAndCategories } from "../service/CalendarGetResults.ts";
+import LoggoutButton from "../../common/LoggoutButton.tsx";
+
+interface CalendarProps {
+    banksInfos: Dispatch<SetStateAction<never[]>>,
+    categoryInfos: Dispatch<SetStateAction<never[]>>,
+    balanceInfos: Dispatch<SetStateAction<never[]>>,
+}
+
+function Calendar({banksInfos, categoryInfos, balanceInfos}: CalendarProps) {
     const date: Date = new Date()
     const [position, setPosition] = useState(date.getMonth())
+
+    useEffect(() => {
+        const {from, to} = obterPrimeiroUltimoDiaDoMes(position)        
+        // fazer um get em categorias e bancos do usuario e mandar as infos para os componentes por meio de props
+        async function callInfos() {
+            await getBanksAndCategories(banksInfos, categoryInfos, balanceInfos, from, to)
+        }
+        callInfos()
+    }, [])
+    
 
     return (
         <Flex alignItems='center' justifyContent="center" height="70px" bg="#161616">
@@ -67,6 +87,7 @@ function Calendar() {
                 />
             </Button>
 
+            <LoggoutButton />
         </Flex>
     )
 }
